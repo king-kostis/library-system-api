@@ -50,4 +50,15 @@ public class LibraryController{
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
+    @PutMapping("/books/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book updatedBook){
+        if (libraryService.getBookById(id).isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        updatedBook.setId(id);
+        libraryService.updateBook(updatedBook);
+        logger.info("The book has been updated"+updatedBook);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
+    }
+
 }
