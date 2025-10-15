@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class LibraryController{
@@ -23,4 +25,12 @@ public class LibraryController{
     @Autowired
     private LibraryService libraryService;
 
+    //============Book Endpoints================
+    @GetMapping("/books")
+    public ResponseEntity<List<Book>> getAllBooks(){
+        List<Book> books = libraryService.getAllBooks();
+        logger.info("The list of books returned "+ books);
+
+        return new ResponseEntity<>(books, HttpStatus.OK);
+    }
 }
