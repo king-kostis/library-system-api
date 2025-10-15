@@ -1,0 +1,17 @@
+[33mcommit 846e8de17de862420a39b1bdacd94ddb40678c32[m[33m ([m[1;36mHEAD -> [m[1;32mimplementing-controller[m[33m)[m
+Author: Jesse <jesseqty74@gmail.com>
+Date:   Wed Oct 15 15:00:00 2025 +0000
+
+    Added getBookById endpoint
+
+[33mcommit 045454c1b35715f06aba57dc7c7003fc3dee024f[m
+Author: Jesse <jesseqty74@gmail.com>
+Date:   Wed Oct 15 14:35:20 2025 +0000
+
+    Adding getAllBooks endpoint
+
+[33mcommit c25556412a069699266e136257559e9102ea30bb[m[33m ([m[1;32mmaster[m[33m)[m
+Author: Jesse <jesseqty74@gmail.com>
+Date:   Wed Oct 15 13:06:22 2025 +0000
+
+    Initial Commit

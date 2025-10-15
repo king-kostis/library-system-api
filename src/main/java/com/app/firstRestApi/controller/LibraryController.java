@@ -39,7 +39,15 @@ public class LibraryController{
     public ResponseEntity<Book> getBookById(@PathVariable Long id){
         Optional<Book> book = libraryService.getBookById(id);
         logger.info("The book returned "+book);
-        book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+        return book.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PostMapping("/books")
+    public ResponseEntity<Book> addBook(@RequestBody Book book){
+        libraryService.addBook(book);
+        logger.info("The book was added");
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
 }
