@@ -118,7 +118,7 @@ public class LibraryController{
 
     //==============================BorrowingRecords Endpoints===========================
     @GetMapping("/borrowRecords")
-    public ResponseEntity<BorrowingRecord> getAllBorrowingRecords(){
+    public ResponseEntity<List<BorrowingRecord>> getAllBorrowingRecords(){
         List<BorrowingRecord> borrowingRecords = libraryService.getAllBorrowingRecords();
         logger.info("The list of borrowing recods is returned"+borrowingRecords);
         return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
