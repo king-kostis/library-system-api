@@ -63,6 +63,15 @@ public class LibraryController{
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 
+    @DeleteMapping("book/{id}")
+    public ResponseEntity<Book> deleteById(@PathVariable Long id){
+        Optional<Book> deletedBook = libraryService.getBookById(id);
+        libraryService.deleteBookById(id);
+        logger.info("The book has been deleted"+deletedBook);
+        return deletedBook.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     //=====================Members Endpoints===========================
     @GetMapping("/members")
     public ResponseEntity<List<Member>> getAllMembers(){
@@ -96,5 +105,14 @@ public class LibraryController{
         libraryService.updateMember(updatedMember);
         logger.info("The member has been updated"+updatedMember);
         return new ResponseEntity<>(updatedMember, HttpStatus.OK);
+    }
+
+    @DeleteMapping("members/{id}")
+    public ResponseEntity<Member> deleteMemberById(@PathVariable Long id){
+        Optional<Member> deletedMember = libraryService.getMemberById(id);
+        libraryService.deleteMemeberById(id);
+        logger.info("The member has been deleted"+deletedMember);
+        return deletedMember.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
