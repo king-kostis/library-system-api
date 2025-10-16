@@ -61,7 +61,7 @@ public class LibraryService{
         members.add(member);
     }
 
-    public void updatedMember(Member updatedMember) {
+    public void updateMember(Member updatedMember) {
         for(int i = 0; i < members.size(); i++){
             if(members.get(i).getId().equals(updatedMember.getId())){
                 members.set(i, updatedMember);

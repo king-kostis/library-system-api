@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +83,18 @@ public class LibraryController{
     @PostMapping("/members")
     public ResponseEntity<Member> addMember(@RequestBody Member member){
         libraryService.addMember(member);
-        logger.info("The member was added");
+        logger.info("The member has been added"+member);
         return new ResponseEntity<>(member, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/members/{id}")
+    public ResponseEntity<Member> updateMember(@PathVariable Long id, @RequestBody Member updatedMember){
+        updatedMember.setId(id);
+        if(!libraryService.getMemberById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        libraryService.updateMember(updatedMember);
+        logger.info("The member has been updated"+updatedMember);
+        return new ResponseEntity<>(updatedMember, HttpStatus.OK);
     }
 }
