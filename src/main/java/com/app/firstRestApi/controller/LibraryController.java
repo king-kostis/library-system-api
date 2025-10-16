@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateRequestCustomizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,4 +70,14 @@ public class LibraryController{
         
         return new ResponseEntity<>(members, HttpStatus.OK); 
     }
+
+    @GetMapping("/members/{id}")
+    public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
+        Optional<Member> member = libraryService.getMemberById(id);
+
+        return member.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @
 }
