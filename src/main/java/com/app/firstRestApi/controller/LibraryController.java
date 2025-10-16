@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +60,87 @@ public class LibraryController{
         libraryService.updateBook(updatedBook);
         logger.info("The book has been updated"+updatedBook);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
+    }
+
+    @DeleteMapping("book/{id}")
+    public ResponseEntity<Book> deleteById(@PathVariable Long id){
+        Optional<Book> deletedBook = libraryService.getBookById(id);
+        libraryService.deleteBookById(id);
+        logger.info("The book has been deleted"+deletedBook);
+        return deletedBook.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    //=====================Members Endpoints===========================
+    @GetMapping("/members")
+    public ResponseEntity<List<Member>> getAllMembers(){
+        List<Member> members = libraryService.getAllMembers();
+        logger.info("The list of members returned"+members);
+        
+        return new ResponseEntity<>(members, HttpStatus.OK); 
+    }
+
+    @GetMapping("/members/{id}")
+    public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
+        Optional<Member> member = libraryService.getMemberById(id);
+
+        return member.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/members")
+    public ResponseEntity<Member> addMember(@RequestBody Member member){
+        libraryService.addMember(member);
+        logger.info("The member has been added"+member);
+        return new ResponseEntity<>(member, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/members/{id}")
+    public ResponseEntity<Member> updateMember(@PathVariable Long id, @RequestBody Member updatedMember){
+        updatedMember.setId(id);
+        if(!libraryService.getMemberById(id).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        libraryService.updateMember(updatedMember);
+        logger.info("The member has been updated"+updatedMember);
+        return new ResponseEntity<>(updatedMember, HttpStatus.OK);
+    }
+
+    @DeleteMapping("members/{id}")
+    public ResponseEntity<Member> deleteMemberById(@PathVariable Long id){
+        Optional<Member> deletedMember = libraryService.getMemberById(id);
+        libraryService.deleteMemeberById(id);
+        logger.info("The member has been deleted"+deletedMember);
+        return deletedMember.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    //==============================BorrowingRecords Endpoints===========================
+    @GetMapping("/borrowRecords")
+    public ResponseEntity<List<BorrowingRecord>> getAllBorrowingRecords(){
+        List<BorrowingRecord> borrowingRecords = libraryService.getAllBorrowingRecords();
+        logger.info("The list of borrowing records is returned"+borrowingRecords);
+        return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
+    }
+
+    @PostMapping("/borrowRecords")
+    public ResponseEntity<BorrowingRecord> borrowBook(@RequestBody BorrowingRecord borrowRecord){
+        Book book = borrowRecord.getBook();
+        if (!libraryService.getBookById(book.getId()).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        libraryService.borrowBook(borrowRecord);
+        logger.info("The book has been borrowed"+borrowRecord);
+        return new ResponseEntity<>(borrowRecord, HttpStatus.OK);
+    }
+
+    @PutMapping("/borrowRecords/{id}")
+    public ResponseEntity<List<BorrowingRecord>> returnBook(@PathVariable Long id){
+        List<BorrowingRecord> borrowingRecords = libraryService.getAllBorrowingRecords();
+
+        libraryService.returnBook(id, LocalDate.now());
+        logger.info("The book has been returned"+borrowingRecords);
+        return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
     }
 
 }
