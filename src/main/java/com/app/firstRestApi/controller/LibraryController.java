@@ -79,5 +79,10 @@ public class LibraryController{
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @
+    @PostMapping("/members")
+    public ResponseEntity<Member> addMember(@RequestBody Member member){
+        libraryService.addMember(member);
+        logger.info("The member was added");
+        return new ResponseEntity<>(member, HttpStatus.CREATED);
+    }
 }
