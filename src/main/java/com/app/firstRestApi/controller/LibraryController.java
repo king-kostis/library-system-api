@@ -9,12 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateRequestCustomizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -135,6 +134,13 @@ public class LibraryController{
         return new ResponseEntity<>(borrowRecord, HttpStatus.OK);
     }
 
+    @PutMapping("/borrowRecords/{id}")
+    public ResponseEntity<List<BorrowingRecord>> returnBook(@PathVariable Long id){
+        List<BorrowingRecord> borrowingRecords = libraryService.getAllBorrowingRecords();
 
+        libraryService.returnBook(id, LocalDate.now());
+        logger.info("The book has been returned"+borrowingRecords);
+        return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
+    }
 
 }
