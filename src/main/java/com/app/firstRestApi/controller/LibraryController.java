@@ -61,4 +61,12 @@ public class LibraryController{
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 
+    //=====================Members Endpoints===========================
+    @GetMapping("/members")
+    public ResponseEntity<List<Member>> getAllMembers(){
+        List<Member> members = libraryService.getAllMembers();
+        logger.info("The list of members returned"+members);
+        
+        return new ResponseEntity<>(members, HttpStatus.OK); 
+    }
 }
