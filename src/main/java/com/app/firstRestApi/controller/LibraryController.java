@@ -115,4 +115,14 @@ public class LibraryController{
         return deletedMember.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    //==============================BorrowingRecords Endpoints===========================
+    @GetMapping("/borrowRecords")
+    public ResponseEntity<BorrowingRecord> getAllBorrowingRecords(){
+        List<BorrowingRecord> borrowingRecords = libraryService.getAllBorrowingRecords();
+        logger.info("The list of borrowing recods is returned"+borrowingRecords);
+        return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
+    }
+
+
 }
