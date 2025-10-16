@@ -120,8 +120,19 @@ public class LibraryController{
     @GetMapping("/borrowRecords")
     public ResponseEntity<List<BorrowingRecord>> getAllBorrowingRecords(){
         List<BorrowingRecord> borrowingRecords = libraryService.getAllBorrowingRecords();
-        logger.info("The list of borrowing recods is returned"+borrowingRecords);
+        logger.info("The list of borrowing records is returned"+borrowingRecords);
         return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
+    }
+
+    @PostMapping("/borrowRecords")
+    public ResponseEntity<BorrowingRecord> borrowBook(@RequestBody BorrowingRecord borrowRecord){
+        Book book = borrowRecord.getBook();
+        if (!libraryService.getBookById(book.getId()).isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        libraryService.borrowBook(borrowRecord);
+        logger.info("The book has been borrowed"+borrowRecord);
+        return new ResponseEntity<>(borrowRecord, HttpStatus.OK);
     }
 
 
