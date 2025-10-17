@@ -14,6 +14,7 @@ public class Member{
     public Member() {}
 
     public Member(String name, String email, String phoneNumber, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
