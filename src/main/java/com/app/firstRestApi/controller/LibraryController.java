@@ -140,6 +140,7 @@ public class LibraryController{
 
         libraryService.returnBook(id, LocalDate.now());
         logger.info("The book has been returned"+borrowingRecords);
+
         return new ResponseEntity<>(borrowingRecords, HttpStatus.OK);
     }
 
