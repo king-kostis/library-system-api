@@ -12,7 +12,6 @@ public class Book {
     public Book(){}
 
     public Book(String title, String author, int publicationYear, String genre, int availableCopies) {
-        this.id = id;
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;

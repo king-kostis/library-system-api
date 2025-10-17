@@ -15,7 +15,6 @@ public class BorrowingRecord{
     public BorrowingRecord() {}
 
     public BorrowingRecord(Book book, Member member, LocalDate borrowDate, LocalDate dueDate) {
-        this.id = id;
         this.book = book;
         this.member = member;
         this.borrowDate = borrowDate;
