@@ -3,7 +3,6 @@ package com.app.firstRestApi.service;
 import com.app.firstRestApi.model.BorrowingRecord;
 import com.app.firstRestApi.model.Book;
 import com.app.firstRestApi.model.Member;
-import com.app.firstRestApi.model.BorrowingRecord;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -63,6 +62,13 @@ public class LibraryService{
     public Collection<Book> getBookByAuthor(String author, String genre){
         return books.stream()
                 .filter(book -> book.getAuthor().equals(author) && book.getGenre().equals(genre))
+                .collect(Collectors.toList());
+    }
+
+    public Collection<Book> getBookByDueDate(LocalDate dueDate){
+        return borrowingRecords.stream()
+                .filter(record -> record.getDueDate().equals(dueDate))
+                .map(record -> record.getBook())
                 .collect(Collectors.toList());
     }
 
