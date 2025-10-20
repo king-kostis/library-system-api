@@ -44,14 +44,31 @@ public class LibraryController{
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("books/genre")
+    @GetMapping("/books/genre")
     public ResponseEntity<List<Book>> getBookByGenre(@RequestParam String genre){
-        List<Book> booksByGenre = getBookByGenre(genre);
+        List<Book> booksByGenre = libraryService.getBookByGenre(genre);
         logger.info("The books have been returned"+booksByGenre);
         return ResponseEntity.ok(booksByGenre);
     }
 
+    @GetMapping("/books/author/{author}")
+    public ResponseEntity<List<Book>> getBookByAuthor(@PathVariable String author, @RequestParam(required = false) String genre){
+        if (!genre.isEmpty()){
+            List<Book> booksByAuthor = libraryService.getBookByAuthor(author, genre);
+            logger.info("The books have been returned"+booksByAuthor);
+            return ResponseEntity.ok(booksByAuthor);
+        }
+        List<Book> booksByAuthor = libraryService.getBookByAuthor(author);
+        logger.info("The books have been returned"+booksByAuthor);
+        return ResponseEntity.ok(booksByAuthor);
+    }
 
+    @GetMapping("/books/dueondate")
+    public ResponseEntity<List<Book>> getBookByDueDate(@RequestParam LocalDate dueDate){
+        List<Book> booksOnDueDate = libraryService.getBookByDueDate(dueDate);
+        logger.info("The books have been returned"+booksOnDueDate);
+        return ResponseEntity.ok(booksOnDueDate);
+    }
 
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book){

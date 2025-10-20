@@ -47,25 +47,25 @@ public class LibraryService{
         books.remove(id);
     }
 
-    public Collection<Book> getBookByGenre(String genre){
+    public List<Book> getBookByGenre(String genre){
         return books.stream()
                 .filter(book -> book.getGenre().equals(genre))
                 .collect(Collectors.toList());
     }
 
-    public Collection<Book> getBookByAuthor(String author){
+    public List<Book> getBookByAuthor(String author){
         return books.stream()
                 .filter(book -> book.getAuthor().equals(author))
                 .collect(Collectors.toList());
     }
 
-    public Collection<Book> getBookByAuthor(String author, String genre){
+    public List<Book> getBookByAuthor(String author, String genre){
         return books.stream()
                 .filter(book -> book.getAuthor().equals(author) && book.getGenre().equals(genre))
                 .collect(Collectors.toList());
     }
 
-    public Collection<Book> getBookByDueDate(LocalDate dueDate){
+    public List<Book> getBookByDueDate(LocalDate dueDate){
         return borrowingRecords.stream()
                 .filter(record -> record.getDueDate().equals(dueDate))
                 .map(record -> record.getBook())
