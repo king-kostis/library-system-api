@@ -72,6 +72,17 @@ public class LibraryService{
                 .collect(Collectors.toList());
     }
 
+    public LocalDate getBookAvailableDate(Long id){
+        LocalDate dueDate = null;
+        for(BorrowingRecord record : borrowingRecords) {
+            if(record.getBook().getId().equals(id)){
+                dueDate = record.getDueDate();
+                break;
+            }
+        }
+        return dueDate;
+    }
+
     //=================Members Methods===================
     public List<Member> getAllMembers(){
         return members;
