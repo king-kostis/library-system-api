@@ -47,7 +47,7 @@ public class LibraryService{
         books.remove(id);
     }
 
-    public Collection<Book> getBooksByGenre(String genre){
+    public Collection<Book> getBookByGenre(String genre){
         return books.stream()
                 .filter(book -> book.getGenre().equals(genre))
                 .collect(Collectors.toList());

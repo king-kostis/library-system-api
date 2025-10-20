@@ -44,6 +44,15 @@ public class LibraryController{
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("books/genre")
+    public ResponseEntity<List<Book>> getBookByGenre(@RequestParam String genre){
+        List<Book> booksByGenre = getBookByGenre(genre);
+        logger.info("The books have been returned"+booksByGenre);
+        return ResponseEntity.ok(booksByGenre);
+    }
+
+
+
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
         libraryService.addBook(book);
