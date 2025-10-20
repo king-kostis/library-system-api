@@ -70,6 +70,13 @@ public class LibraryController{
         return ResponseEntity.ok(booksOnDueDate);
     }
 
+    @GetMapping("/bookavailabledate")
+    public ResponseEntity<LocalDate> getBookAvailableDate(@RequestParam Long bookid){
+        LocalDate availableDate = libraryService.getBookAvailableDate(bookid);
+        logger.info("The book has been returned"+availableDate);
+        return ResponseEntity.ok(availableDate);
+    }
+
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
         libraryService.addBook(book);
